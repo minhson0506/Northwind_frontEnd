@@ -3,7 +3,7 @@ import './App.css';
 import {MainContext} from './contexts/MainContext';
 import {OrderWithDetails} from './interface/Order';
 
-import {Home} from './view/home';
+import {Home} from './view/Home';
 // import {MainProvider} from './contexts/MainContext';
 
 function App() {

@@ -9,17 +9,13 @@ export const Home: React.FC<homeProps> = ({}) => {
   const { getOrders } = useOrder();
   const { orders } = useMainContext();
 
-  const getData = async () => {
-    const data = await getOrders(false);
-    console.log("data get", data);
-  };
-
   // load order when component is mounted
   useEffect(() => {
-    getData();
+    getOrders(false);
   }, []);
 
   return (
     <p>{orders.length > 0 ? orders[0].CustomerDetails?.Address : "no data"}</p>
+    
   );
 };
