@@ -101,7 +101,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export const Home: React.FC<HomeProps> = () => {
+export const HomePage: React.FC<HomeProps> = () => {
   const { getOrders } = useOrder();
   const { orders } = useMainContext();
 
