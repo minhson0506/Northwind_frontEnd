@@ -3,6 +3,7 @@ import { useMainContext } from '../contexts/MainContext';
 import { OrderWithDetails } from '../interface/Order';
 import { baseUrl } from '../utils/variables';
 
+// function for fetching data from backend
 const doFetch = async (url: string, options: any) => {
     try {
         const response = await fetch(url, options);
@@ -13,6 +14,7 @@ const doFetch = async (url: string, options: any) => {
     }
 };
 
+// hook for fetching orders and saving them to context
 const useOrder = () => {
     const { setOrders } = useMainContext();
 

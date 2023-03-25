@@ -7,18 +7,19 @@ import Typography from '@mui/material/Typography';
 import { OrderDetailWithProduct } from '../interface/OrderDetail';
 import { useMainContext } from '../contexts/MainContext';
 import CSS from 'csstype';
-import '@fontsource/inter';
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface DetailsProps {}
 
 export const DetailsPage: React.FC<DetailsProps> = (props) => {
-    const { id } = useParams();
-
     const { orders } = useMainContext();
-
     const navigate = useNavigate();
 
+    const { id } = useParams();
+
+    // find order by id
     const order = orders.find((element) => element.OrderID === parseInt(id ? id : '0'));
+
     return order !== undefined ? (
         <div style={containerStyles}>
             <Button
@@ -50,13 +51,20 @@ export const DetailsPage: React.FC<DetailsProps> = (props) => {
                     <Typography style={textStyles}>Status: {order.ShippedDate ? 'Shipped' : 'Not shipped'}</Typography>
                     {order.RequiredDate !== null ? (
                         <Typography style={textStyles}>
-                            {order.ShippedDate
-                                ? compareDate(order.RequiredDate, order.ShippedDate)
-                                    ? 'Shipped before required date'
-                                    : 'Shipped after required date'
-                                : compareDate('', order.RequiredDate)
-                                ? 'Required date passed'
-                                : 'Required date not passed yet'}
+                            {order.ShippedDate ? (
+                                compareDate(order.RequiredDate, order.ShippedDate) ? (
+                                    <p>Shipped before required date</p>
+                                ) : (
+                                    <>
+                                        <p>Shipped after required date</p>
+                                        <WarningIcon />
+                                    </>
+                                )
+                            ) : compareDate('', order.RequiredDate) ? (
+                                <p>Required date passed</p>
+                            ) : (
+                                <p>Required date not passed yet</p>
+                            )}
                         </Typography>
                     ) : (
                         <p>No required date for delivery</p>
@@ -105,16 +113,10 @@ const textStyles: React.CSSProperties = {
     color: '#ffffff',
 };
 
+// comapare dates for getting status of order: late or on time
 function compareDate(firstString: string, secondString: string) {
-    if (firstString === '') {
-        const firstDate = new Date();
-        const secondDate = new Date(secondString);
-        if (firstDate > secondDate) return true;
-        return false;
-    } else {
-        const firstDate = new Date(firstString);
-        const secondDate = new Date(secondString);
-        if (firstDate > secondDate) return true;
-        return false;
-    }
+    const firstDate = firstString === '' ? new Date() : new Date(firstString);
+    const secondDate = new Date(secondString);
+
+    return firstDate > secondDate;
 }

@@ -10,7 +10,6 @@ function App() {
     const [orders, setOrders] = useState<OrderWithDetails[]>([]);
     const [input, setInput] = useState('');
     const [checked, setChecked] = useState(false);
-
     return (
         <MainContext.Provider value={{ orders, setOrders, input, setInput, checked, setChecked }}>
             <BrowserRouter>

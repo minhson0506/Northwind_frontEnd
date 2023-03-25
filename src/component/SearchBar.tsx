@@ -79,4 +79,4 @@ const checkBoxStyles: CSS.Properties = {
     color: '#b54139',
 };
 
-export {SearchBar}
+export { SearchBar };

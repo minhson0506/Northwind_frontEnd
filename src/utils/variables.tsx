@@ -1,4 +1,3 @@
-const baseUrl = 'http://localhost:3000/api/v1/';
-// const baseUrl = 'https://northwind-be.onrender.com/api/v1/';
+const baseUrl = process.env.REACT_APP_BASE_URL ?? 'https://northwind-be.onrender.com/api/v1/';
 
-export {baseUrl};
+export { baseUrl };
