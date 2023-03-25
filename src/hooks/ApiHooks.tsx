@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import CustomError from "../classes/CustomError";
 import { useMainContext } from "../contexts/MainContext";
 import { OrderWithDetails } from "../interface/Order";
