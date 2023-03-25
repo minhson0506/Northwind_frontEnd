@@ -17,7 +17,6 @@ const doFetch = async (url: string, options: any) => {
 const useOrder = () => {
   const { setOrders } = useMainContext();
 
-  console.log("orders in useOrder", setOrders);
   const getOrders = async (shipped: boolean) => {
     const options = {
       method: "GET",
@@ -29,7 +28,15 @@ const useOrder = () => {
     setOrders(response as OrderWithDetails[]);
   };
 
-  return { getOrders };
+  const getOrdersBySearch = async (shipped: boolean, search: string) => {
+    const options = {
+      method: "GET",
+    };
+    const response = await doFetch(baseUrl + `order/${shipped.toString()}/` + search, options);
+    setOrders(response as OrderWithDetails[]);
+  };
+
+  return { getOrders, getOrdersBySearch };
 };
 
 export { useOrder };
