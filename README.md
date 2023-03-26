@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+# NORTHWIND front end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Client app](https://northwind-ggzk.onrender.com)
 
-## Available Scripts
+Northwind front end was created to help organize orders in northwind database.
 
-In the project directory, you can run:
+The Northwind sample database was provided with Microsoft Access as a tutorial schema for managing small business customers, orders, inventory, purchasing, suppliers, shipping, and employees. Northwind is an excellent tutorial schema for a small-business ERP, with customers, orders, inventory, purchasing, suppliers, shipping, employees, and single-entry accounting.
 
-### `npm start`
+All the TABLES and VIEWS from the MSSQL-2000 version have been converted to Sqlite3 and included here. Included is a single version prepopulated with data. Should you decide to, you can use the included python script to pump the database full of more data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+TerveysHelppi was created to help organize your important health information and make it easy to access in a central and secure place. This application acts as a coach who gives you standardized and reliable information for your health and fitness.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## App features
 
-### `npm test`
+<ul>
+  <li> Display list of orders from northwind database with pagination
+  <li> Filter orders base on product name and status of delivery
+  <li> Display information of order
+  <li> Warning the order is late or was delivery out of time
+</ul>
+  
+## A sneak peek of TerveysHelppi!!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Start application: Loading the data
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227782641-3e95317d-93d4-4dfb-b5ee-390608d77e42.png" width="750"> 
+</p> 
 
-### `npm run build`
+- Fetched orders data from database
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227782781-99d11d5b-e9ea-44c3-b143-9606c9bab37d.png" width="750"> 
+</p> 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Filter orders data with name of products
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227782843-bfe128f0-345f-4370-aec4-aab5641a71b6.png" width="750"> 
+</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Filter orders data with name of product and status of delivery
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227782994-652f6075-7a57-43a6-a486-f0983401a8a4.png" width="750"> 
+</p> 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Filter orders data when no result
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227783012-fe7c1de0-d5e3-4a4c-bf6a-576e98dac3a1.png" width="750"> 
+</p> 
 
-### `npm run eject`
+- Order details
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73076333/227783075-e11b131d-46da-45ea-8afb-912ad83c0304.png" width="750"> 
+</p> 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Installation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone northwind_frontend to local:
+```
+$ git clone git@github.com:minhson0506/northwind_frontend.git
+```
+2. Build and run project:
+```
+$ cd northwind_frontend
+$ npm i
+$ npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
