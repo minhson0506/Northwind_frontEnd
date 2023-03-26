@@ -55,13 +55,16 @@ export const DetailsPage: React.FC<DetailsProps> = (props) => {
                                 compareDate(order.RequiredDate, order.ShippedDate) ? (
                                     <p>Shipped before required date</p>
                                 ) : (
-                                    <>
-                                        <p>Shipped after required date</p>
-                                        <WarningIcon />
-                                    </>
+                                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                        <p>Shipped after required date </p>
+                                        <WarningIcon style={{ height: '30px', color: '#b54139' }} />
+                                    </div>
                                 )
                             ) : compareDate('', order.RequiredDate) ? (
-                                <p>Required date passed</p>
+                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                    <p>Required date passed </p>
+                                    <WarningIcon style={{ height: '30px', color: '#b54139' }} />
+                                </div>
                             ) : (
                                 <p>Required date not passed yet</p>
                             )}
@@ -83,12 +86,18 @@ const containerStyles: CSS.Properties = {
 };
 
 const buttonStyles: CSS.Properties = {
-    margin: '5%',
-    backgroundColor: '#012B37',
-    color: '#fff',
     marginLeft: '20px',
     marginTop: '20px',
     border: '1px solid #000',
+    backgroundColor: '#b54139',
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '19px',
+    textTransform: 'none',
+    borderRadius: '20px',
+    padding: '10px',
 };
 
 const cardStyles: CSS.Properties = {
@@ -105,12 +114,16 @@ const cardStyles: CSS.Properties = {
 const titleStyles: React.CSSProperties = {
     fontSize: 20,
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#b54139',
+    paddingBottom: '20px',
+    fontWeight: 'bold',
+    marginTop: '10px',
 };
 
 const textStyles: React.CSSProperties = {
     fontSize: 16,
     color: '#ffffff',
+    paddingBottom: '10px',
 };
 
 // comapare dates for getting status of order: late or on time

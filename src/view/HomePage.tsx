@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useMainContext } from '../contexts/MainContext';
 import CSS from 'csstype';
 import { TableOrders } from '../component/TableOrders';
-import { SearchBar } from '../component/SearchBar';
+import { SearchBar, textStyles } from '../component/SearchBar';
 
 interface HomeProps {}
 
@@ -34,19 +34,17 @@ export const HomePage: React.FC<HomeProps> = () => {
     }, []);
 
     return (
-        <div>
-            <div style={containerStyle}>
-                <p style={titleStyles}>NORTHWIND</p>
-                <div style={bodyStyles}>
-                    <SearchBar />
-                    {orders.length === 0 ? (
-                        <p>Loading...</p>
-                    ) : data.length > 0 ? (
-                        <TableOrders orders={data} />
-                    ) : (
-                        <p style={noOrderStyles}>No orders found</p>
-                    )}
-                </div>
+        <div style={containerStyle}>
+            <p style={titleStyles}>NORTHWIND</p>
+            <div style={bodyStyles}>
+                <SearchBar />
+                {orders.length === 0 ? (
+                    <p style={textStyles}>Loading...</p>
+                ) : data.length > 0 ? (
+                    <TableOrders orders={data} />
+                ) : (
+                    <p style={noOrderStyles}>No orders found</p>
+                )}
             </div>
         </div>
     );
@@ -55,13 +53,11 @@ export const HomePage: React.FC<HomeProps> = () => {
 const containerStyle: CSS.Properties = {
     margin: 0,
     padding: 0,
-    backgroundColor: '#012B37',
-    opacity: '0.92',
     width: '100%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'start',
     alignItems: 'center',
 };
 
@@ -73,6 +69,7 @@ const titleStyles: CSS.Properties = {
     fontSize: '24px',
     lineHeight: '29px',
     marginTop: '20px',
+    alignSelf: 'flex-start',
 };
 
 const bodyStyles: CSS.Properties = {
