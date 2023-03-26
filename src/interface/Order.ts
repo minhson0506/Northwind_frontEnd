@@ -1,5 +1,5 @@
 import {Customer} from "./Customer";
-import {OrderDetail} from "./OrderDetail";
+import {OrderDetailWithProduct} from "./OrderDetail";
 
 export interface Order {
     OrderID: number;
@@ -19,6 +19,6 @@ export interface Order {
 }
 
 export interface OrderWithDetails extends Order {
-    OrderDetails: OrderDetail[];
+    OrderDetails: OrderDetailWithProduct[];
     CustomerDetails: Customer | null;
 }

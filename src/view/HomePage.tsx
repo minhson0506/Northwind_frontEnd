@@ -1,218 +1,95 @@
-import React from "react";
-import { useOrder } from "../hooks/ApiHooks";
-import { useEffect } from "react";
-import { useMainContext } from "../contexts/MainContext";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button, TextField } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import IconButton from "@mui/material/IconButton";
+import React from 'react';
+import { useOrder } from '../hooks/ApiHooks';
+import { useEffect } from 'react';
+import { useMainContext } from '../contexts/MainContext';
+import CSS from 'csstype';
+import { TableOrders } from '../component/TableOrders';
+import { SearchBar } from '../component/SearchBar';
 
 interface HomeProps {}
 
-interface TablePaginationActionsProps {
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    newPage: number
-  ) => void;
-}
-
-function TablePaginationActions(props: TablePaginationActionsProps) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleFirstPageButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    onPageChange(event, 0);
-  };
-
-  const handleBackButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    onPageChange(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRightIcon />
-        ) : (
-          <KeyboardArrowLeftIcon />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeftIcon />
-        ) : (
-          <KeyboardArrowRightIcon />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  );
-}
-
 export const HomePage: React.FC<HomeProps> = () => {
-  const { getOrders } = useOrder();
-  const { orders } = useMainContext();
+    const { getOrders } = useOrder();
+    const { orders, checked, input } = useMainContext();
 
-  // load order when component is mounted
-  useEffect(() => {
-    getOrders(false);
-  }, []);
+    // filter orders for display in table
+    let data = checked ? orders.filter((element) => element.ShippedDate != null) : orders;
+    if (input !== '') {
+        data = data.filter((element) => {
+            const productNameList = element.OrderDetails.map((detail) => detail.ProductDetails.ProductName);
+            let includes = false;
+            productNameList.forEach((name) => {
+                console.log(name);
+                if (name.toLowerCase().includes(input.toLowerCase())) {
+                    includes = true;
+                }
+            });
+            return includes;
+        });
+    }
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    // load order when component is mounted
+    useEffect(() => {
+        getOrders();
+    }, []);
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
+    return (
+        <div>
+            <div style={containerStyle}>
+                <p style={titleStyles}>NORTHWIND</p>
+                <div style={bodyStyles}>
+                    <SearchBar />
+                    {orders.length === 0 ? (
+                        <p>Loading...</p>
+                    ) : data.length > 0 ? (
+                        <TableOrders orders={data} />
+                    ) : (
+                        <p style={noOrderStyles}>No orders found</p>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
+const containerStyle: CSS.Properties = {
+    margin: 0,
+    padding: 0,
+    backgroundColor: '#012B37',
+    opacity: '0.92',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+};
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+const titleStyles: CSS.Properties = {
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    marginLeft: '20px',
+    color: '#ffffff',
+    fontSize: '24px',
+    lineHeight: '29px',
+    marginTop: '20px',
+};
 
-  return (
-    <div>
-      <p>NORTHWIND</p>
+const bodyStyles: CSS.Properties = {
+    margin: 0,
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+};
 
-      <TextField label="Aniseed Syrup"></TextField>
-
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-          <TableBody>
-            {(rowsPerPage > 0
-              ? orders.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : orders
-            ).map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{ borderBottom: "none" }}
-                >
-                  {index + 1}
-                </TableCell>
-                <TableCell align="right" style={{ borderBottom: "none" }}>
-                  {row.ShipAddress}
-                </TableCell>
-                <TableCell align="right" style={{ borderBottom: "none" }}>
-                {row.CustomerDetails?.ContactName}
-                </TableCell>
-                <TableCell align="right" style={{ borderBottom: "none" }}>
-                  {row.OrderDetails?.length > 4 ? (
-                    <>
-                      <p>{row.OrderDetails[0].ProductID}</p>
-                      <p>{row.OrderDetails[1].ProductID}</p>
-                      <p>{row.OrderDetails[2].ProductID}</p>
-                      <p>{row.OrderDetails.length - 3} more</p>
-                    </>
-                  ) : (
-                    <>
-                      {row.OrderDetails?.map((order) => (
-                        <p>{order.ProductID}</p>
-                      ))}
-                    </>
-                  )}
-                </TableCell>
-                <TableCell align="right" style={{ borderBottom: "none" }}>
-                  <Button variant="contained">Details</Button>
-                </TableCell>
-              </TableRow>
-            ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter >
-            <TableRow >
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
-                count={orders.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+const noOrderStyles: CSS.Properties = {
+    fontFamily: 'Inter',
+    fontWeight: 'normal',
+    marginLeft: '20px',
+    color: '#ff0000',
+    fontSize: '16px',
+    lineHeight: '19px',
+    marginTop: '20px',
 };
