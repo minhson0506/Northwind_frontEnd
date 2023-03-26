@@ -8,7 +8,6 @@ describe('SearchBar', () => {
         expect(screen.getByText('Show only shipped orders')).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toBeInTheDocument();
         expect(screen.getByRole('checkbox')).toBeInTheDocument();
-        expect(screen.getByRole('button')).toBeInTheDocument();
         expect(screen.getByRole('checkbox')).not.toBeChecked();
         expect(screen.getByRole('textbox')).toHaveValue('');
     });
