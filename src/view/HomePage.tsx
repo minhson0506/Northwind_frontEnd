@@ -5,12 +5,14 @@ import { useMainContext } from '../contexts/MainContext';
 import CSS from 'csstype';
 import { TableOrders } from '../component/TableOrders';
 import { SearchBar, textStyles } from '../component/SearchBar';
+import {SearchBarMobile} from '../component/SearchBarMobile';
 
 interface HomeProps {}
 
 export const HomePage: React.FC<HomeProps> = () => {
     const { getOrders } = useOrder();
     const { orders, checked, input } = useMainContext();
+    const { width } = window.screen;
 
     // filter orders for display in table
     let data = checked ? orders.filter((element) => element.ShippedDate != null) : orders;
@@ -37,7 +39,7 @@ export const HomePage: React.FC<HomeProps> = () => {
         <div style={containerStyle}>
             <p style={titleStyles}>NORTHWIND</p>
             <div style={bodyStyles}>
-                <SearchBar />
+                {width > 768 ? <SearchBar /> : <SearchBarMobile />}
                 {orders.length === 0 ? (
                     <p style={textStyles}>Loading...</p>
                 ) : data.length > 0 ? (
