@@ -5,6 +5,7 @@ import { OrderWithDetails } from './interface/Order';
 import { DetailsPage } from './view/DetailsPage';
 import { HomePage } from './view/HomePage';
 import '@fontsource/inter/400.css';
+import './App.css'
 
 function App() {
     const [orders, setOrders] = useState<OrderWithDetails[]>([]);
