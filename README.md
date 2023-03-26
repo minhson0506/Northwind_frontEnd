@@ -19,7 +19,7 @@ TerveysHelppi was created to help organize your important health information and
   <li> Warning the order is late or was delivery out of time
 </ul>
   
-## A sneak peek of TerveysHelppi!!
+## A sneak peek of Northwind!!
 
 - Start application: Loading the data
 <p align="center">
@@ -59,8 +59,10 @@ $ git clone git@github.com:minhson0506/northwind_frontend.git
 ```
 2. Build and run project:
 ```
-$ cd northwind_frontend
+$ cd northwind_backEnd
 $ npm i
-$ npm start
+$ npm run dev
 ```
+
+
 
